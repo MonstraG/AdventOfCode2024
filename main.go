@@ -1,6 +1,8 @@
 package main
 
-import "adventOfCode/two"
+import (
+	"adventOfCode/two"
+)
 
 func main() {
 	two.One()

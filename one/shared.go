@@ -7,9 +7,7 @@ import (
 	"strings"
 )
 
-func parseLists(file string) ([]int, []int) {
-	lines := strings.Split(file, "\n")
-
+func parseLists(lines []string) ([]int, []int) {
 	lineCount := len(lines)
 
 	leftList := make([]int, lineCount, lineCount)
@@ -49,6 +47,6 @@ func parseLists(file string) ([]int, []int) {
 }
 
 func getListsFromInput() ([]int, []int) {
-	file := shared.ReadFile()
-	return parseLists(file)
+	lines := shared.ReadFileLines("one/input")
+	return parseLists(lines)
 }

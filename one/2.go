@@ -1,5 +1,7 @@
 package one
 
+import "fmt"
+
 // if left number is the same, similarity number is also the same
 // this can be used to optimise this, but on only 1000 rows, I don't care.
 // with numbers up to 10^6 with 1000 rows the duplicate rate should actually be quite low,
@@ -25,5 +27,5 @@ func Two() {
 	leftList, rightList := getListsFromInput()
 
 	similarity := findSimilarityByOccurances(leftList, rightList)
-	print(similarity)
+	fmt.Println(similarity)
 }
