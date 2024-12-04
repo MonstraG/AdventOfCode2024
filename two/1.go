@@ -5,11 +5,6 @@ import (
 	"fmt"
 )
 
-func isReportValid(report []int) bool {
-	ok, _ := findReportFailure(report)
-	return ok
-}
-
 func One() {
 	lines := shared.ReadFileLines("two/input")
 	reports := parseReports(lines)

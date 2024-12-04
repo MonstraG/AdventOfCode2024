@@ -69,29 +69,60 @@ func isDifferenceValid(expectedDirection int, this int) bool {
 	return true
 }
 
-// findReportFailure
-func findReportFailure(report []int) (valid bool, failureIndex int) {
+// getReportDirection goes trough entire report and figures out what is the
+// "majority" direction for the report:
+// 3, 1, 2, 3, -> +
+// 8, 7, 6, 7  -> -
+func getReportDirection(report []int) int {
+	direction := 0
+	prev := report[0]
+	for _, level := range report {
+		levelDiff := diff(prev, level)
+		if levelDiff > 0 {
+			direction += 1
+		}
+		if levelDiff < 0 {
+			direction -= 1
+		}
+	}
+
+	// and clamp to [-1, 1]
+	if direction > 0 {
+		return 1
+	}
+	if direction < 0 {
+		return -1
+	}
+	return 0
+}
+
+// diff is just the minus operation
+// the only reason it's a separate function is to make sure that you pass
+// stuff in the correct order, meaning it's always a - b, and not b - a.
+func diff(previous int, current int) int {
+	return previous - current
+}
+
+func isReportValid(report []int) bool {
 	if len(report) < 2 {
 		// this is unspecified, but I'll assume that report of 1 number or less is invalid
-		return true, 0
+		return false
+	}
+
+	reportDiff := getReportDirection(report)
+	if !isDifferenceValid(reportDiff, reportDiff) {
+		return false
 	}
 
 	previous := report[0]
-
-	// take first difference as the canonical for report
-	reportDiff := report[0] - report[1]
-	if !isDifferenceValid(reportDiff, reportDiff) {
-		return false, 1
-	}
-
-	for index, level := range report[1:] {
-		levelDiff := previous - level
+	for _, level := range report[1:] {
+		levelDiff := diff(previous, level)
 		if !isDifferenceValid(reportDiff, levelDiff) {
-			return false, index + 1
+			return false
 		}
 
 		previous = level
 	}
 
-	return true, 0
+	return true
 }

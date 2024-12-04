@@ -5,20 +5,26 @@ import (
 	"fmt"
 )
 
-// https://stackoverflow.com/a/37335777/11593686
-func remove(slice []int, s int) []int {
-	return append(slice[:s], slice[s+1:]...)
+func RemoveIndex(s []int, index int) []int {
+	ret := make([]int, 0)
+	ret = append(ret, s[:index]...)
+	return append(ret, s[index+1:]...)
 }
 
 func isDampenedReportValid(report []int) bool {
-	ok, failureIndex := findReportFailure(report)
+	ok := isReportValid(report)
 	if ok {
 		return true
 	}
 
-	// remove that and try again
-	ok, _ = findReportFailure(remove(report, failureIndex))
-	return ok
+	for index := range report {
+		ok = isReportValid(RemoveIndex(report, index))
+		if ok {
+			return true
+		}
+	}
+
+	return false
 }
 
 func Two() {
