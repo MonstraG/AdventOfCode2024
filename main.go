@@ -1,10 +1,9 @@
 package main
 
 import (
-	"adventOfCode/two"
+	"adventOfCode/three"
 )
 
 func main() {
-	two.One()
-	two.Two()
+	three.One()
 }
