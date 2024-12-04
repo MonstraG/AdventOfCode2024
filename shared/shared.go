@@ -11,7 +11,7 @@ func ReadFile(path string) string {
 		panic(err)
 	}
 
-	return string(bytes)
+	return strings.TrimSpace(string(bytes))
 }
 
 func ReadFileLines(path string) []string {
